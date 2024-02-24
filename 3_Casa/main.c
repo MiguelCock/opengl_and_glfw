@@ -9,36 +9,24 @@ struct Point
     int y;
 };
 
-struct linkedList
-{
-    struct Point p;
-    struct linkedList *next;
-};
-
-void listAppend(int x, int y, struct linkedList *head)
-{
-    struct linkedList *h = head;
-    for (; h->next != NULL;)
-    {
-        h = h->next;
-    }
-    struct linkedList *nxt = (struct linkedList *)malloc(sizeof(struct linkedList));
-    nxt->p.x = x;
-    nxt->p.y = y;
-    h->next = nxt;
-}
-
 struct Object
 {
-    int vertices;
-    struct linkedList *pointsList;
+    int vertex;
+    struct Point *vertexList;
     int conections;
-    struct linkedList *conectionsList;
+    struct Point *conectionsList;
 };
+
+void freeObject(struct Object *obj)
+{
+    free(obj->conectionsList);
+    free(obj->vertexList);
+    free(obj);
+}
 
 struct Object *readFile()
 {
-    FILE *file = fopen("casa.txt", "r");
+    FILE *file = fopen("percha.txt", "r");
 
     if (file == NULL)
     {
@@ -52,42 +40,82 @@ struct Object *readFile()
 
     if (fgets(buffer, 15, file) != NULL)
     {
-        printf("Line read: %s", buffer);
-        obj->vertices = (int)buffer[0] - 48;
+        printf("Vertex read: %s", buffer);
+        obj->vertex = (int)buffer[0] - 48;
+        obj->vertexList = (struct Point *)malloc(obj->vertex * sizeof(struct Point));
     }
 
     int i = 0;
-    while (fgets(buffer, 15, file) != NULL && i != obj->vertices)
+    while (i < obj->vertex && fgets(buffer, 15, file) != NULL)
     {
-        struct linkedList *h = obj->pointsList;
-
         int x = 0;
         int y = 0;
 
+        printf("%d ", i);
         printf("Line read: %s", buffer);
 
         x += 100 * ((int)buffer[0] - 48);
         x += 10 * ((int)buffer[1] - 48);
         x += ((int)buffer[2] - 48);
+
         y += 100 * ((int)buffer[4] - 48);
         y += 10 * ((int)buffer[5] - 48);
         y += ((int)buffer[6] - 48);
 
         printf("%d ", x);
         printf("%d\n", y);
-        
-        struct linkedList *nxt = (struct linkedList *)malloc(sizeof(struct linkedList));
-        nxt->p.x = x;
-        nxt->p.y = y;
-        h->next = nxt;
-        h = h->next;
 
+        obj->vertexList[i].x = x;
+        obj->vertexList[i].y = y;
+        i++;
+    }
+
+    if (fgets(buffer, 15, file) != NULL)
+    {
+        printf("Connections read: %s", buffer);
+        obj->conections = (int)buffer[0] - 48;
+        obj->conectionsList = (struct Point *)malloc(obj->conections * sizeof(struct Point));
+    }
+
+    i = 0;
+    while (i != obj->conections && fgets(buffer, 15, file) != NULL)
+    {
+        int x = 0;
+        int y = 0;
+
+        printf("Line read: %s", buffer);
+
+        x = ((int)buffer[0] - 48);
+        y = ((int)buffer[2] - 48);
+
+        printf("%d ", x);
+        printf("%d\n", y);
+
+        obj->conectionsList[i].x = x;
+        obj->conectionsList[i].y = y;
         i++;
     }
 
     fclose(file);
 
     return obj;
+}
+
+void drawObject(struct Object *obj)
+{
+    glBegin(GL_LINES);
+    glColor3f(0.0f, 0.0f, 0.0f);
+
+    for (int i = 0; i < obj->conections; ++i)
+    {
+        int p1 = obj->conectionsList[i].x;
+        int p2 = obj->conectionsList[i].y;
+
+        glVertex2i(obj->vertexList[p1].x, obj->vertexList[p1].y);
+        glVertex2i(obj->vertexList[p2].x, obj->vertexList[p2].y);
+    }
+
+    glEnd();
 }
 
 int main(void)
@@ -110,7 +138,6 @@ int main(void)
     glfwSwapInterval(1);
 
     struct Object *obj = readFile();
-    printf("%d\n", obj->vertices);
 
     glClearColor(0.7f, 0.7f, 1.0f, 1.0f);
 
@@ -127,23 +154,14 @@ int main(void)
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
 
-        glBegin(GL_LINE_LOOP);
-
-        glColor3f(0.0f, 1.0f, 0.0f);
-
-        glVertex2i(100, 100);
-        glVertex2i(200, 100);
-        glVertex2i(200, 200);
-        glVertex2i(150, 250);
-        glVertex2i(100, 200);
-
-        glEnd();
+        drawObject(obj);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
     glfwDestroyWindow(window);
+    freeObject(obj);
 
     glfwTerminate();
 
