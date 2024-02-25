@@ -1,3 +1,0 @@
-gcc -o game main.c -lglfw -lGL
-
-./game
