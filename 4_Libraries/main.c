@@ -19,8 +19,6 @@ int main(void)
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
 
-    struct Object *obj = readFile();
-
     glClearColor(0.7f, 0.7f, 1.0f, 1.0f);
 
     while (!glfwWindowShouldClose(window))
@@ -36,15 +34,14 @@ int main(void)
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
 
-        drawObject(obj);
+        //drawings
+
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
     glfwDestroyWindow(window);
-    freeObject(obj);
-
     glfwTerminate();
 
     exit(EXIT_SUCCESS);

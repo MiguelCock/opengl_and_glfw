@@ -2,6 +2,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
-#include "Math/VPM.h"
-#include "Utilities/All.h"
+#include "Entity.h"
+#include "Math3D.h"
+#include "Utils.h"

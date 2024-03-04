@@ -1,7 +1,8 @@
 {
     "files.associations": {
-        "vector3.h": "c",
-        "stdlib.h": "c",
-        "stdio.h": "c"
+        "matrix3.h": "c",
+        "math.h": "c",
+        "point3.h": "c",
+        "entity.h": "c"
     }
 }
