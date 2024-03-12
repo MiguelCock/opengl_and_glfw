@@ -1,47 +1,45 @@
-#include "Entity.h"
-#include <stdio.h>
-#include <GLFW/glfw3.h>
-#include <stdlib.h>
+#include "src/Include.h"
 
-struct Entity *entCreate()
+int main()
 {
-    struct Entity *ent = (struct Entity *)malloc(sizeof(struct Entity *));
-    ent->center.x = 0;
-    ent->center.y = 0;
-    ent->center.w = 0;
 
-    return ent;
-}
-
-void entFree(struct Entity *ent)
-{
-    free(ent->p3List);
-    free(ent->conectionsList);
-    free(ent);
-}
-
-void entDraw(struct Entity *ent)
-{
-    glBegin(GL_LINES);
-    glColor3f(0.0f, 0.0f, 0.0f);
-
-    for (int i = 0; i < ent->conections; i++)
-    {
-        int p1 = ent->conectionsList[i];
-        int p2 = ent->conectionsList[i+1];
-
-        glVertex2i(ent->p3List[p1].x, ent->p3List[p1].y);
-        glVertex2i(ent->p3List[p2].x, ent->p3List[p2].y);
-    }
-
-    glEnd();
-}
-
-struct Entity *entReadFile()
-{
     int err;
+
+    //====================WRITING THE FILES====================
+
     FILE *file;
     char filename[] = "entity.bin";
+
+    // Created the bin file
+    file = fopen(filename, "wb");
+
+    // Check if file opened successfully
+    if (file == NULL)
+    {
+        fprintf(stderr, "Error opening file '%s'\n", filename);
+        return 1;
+    }
+
+    // save the amount of points in the file
+    int points = 5;
+    err = fwrite(&points, sizeof(int), 1, file);
+
+    // save the coordenates of the points in the file
+    double ps[5][2] = {{-100., -100.}, {100., -100.}, {100., 100.}, {-100., 100.}, {0., 0.}};
+    err = fwrite(ps, sizeof(double), points * 2, file);
+
+    // save the amount of coordinates in the file
+    int conections = 6;
+    err = fwrite(&conections, 4, 1, file);
+
+    // save the conections of the points in the file
+    int cs[6][2] = {{0, 1}, {1, 2}, {2, 3}, {3, 4}, {4, 5}, {5, 0}};
+    err = fwrite(cs, sizeof(int), conections * 2, file);
+
+    // Close the file
+    err = fclose(file);
+
+    //====================READING THE FILES====================
 
     // Open the file
     file = fopen(filename, "rb");
@@ -50,7 +48,7 @@ struct Entity *entReadFile()
     if (file == NULL)
     {
         fprintf(stderr, "Error opening file '%s'\n", filename);
-        return NULL;
+        return 1;
     }
 
     // create the entity
@@ -90,15 +88,12 @@ struct Entity *entReadFile()
     }
 
     // Close the file
-    if (file == NULL)
+    if (file != NULL)
     {
         fclose(file);
     }
 
-    if (err == 0)
-    {
-        return NULL;
-    }
+    entFree(ent);
 
-    return ent;
+    return 0;
 }

@@ -1,13 +1,18 @@
 #include "Math2D.h"
 
-struct Entity {
+struct Entity
+{
     struct Point3 center;
     int pointsAmount;
-    struct Point3* p3List;
+    struct Point3 *p3List;
     int conections;
-    struct Point3 *conectionsList;
+    int *conectionsList;
 };
 
-struct Entity* entCreate();
+struct Entity *entCreate();
 
-void entFree(struct Entity* ent);
+void entFree(struct Entity *ent);
+
+void entDraw(struct Entity * ent);
+
+struct Entity* entReadFile();

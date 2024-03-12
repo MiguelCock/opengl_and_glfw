@@ -16,6 +16,8 @@ int main(void)
         exit(EXIT_FAILURE);
     }
 
+    struct Entity *ent = entReadFile();
+
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
 
@@ -36,6 +38,7 @@ int main(void)
 
         //drawings
 
+        entDraw(ent);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -43,6 +46,8 @@ int main(void)
 
     glfwDestroyWindow(window);
     glfwTerminate();
+
+    entFree(ent);
 
     exit(EXIT_SUCCESS);
 }

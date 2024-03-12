@@ -7,11 +7,11 @@ struct Matrix4x4 *m4CreateIdent();
 
 struct Matrix4x4 *m4CreateProyection();
 
-struct Matrix4x4 *m4CreateRotationX();
+struct Matrix4x4 *m4CreateRX();
 
-struct Matrix4x4 *m4CreateRotationY();
+struct Matrix4x4 *m4CreateRY();
 
-struct Matrix4x4 *m4CreateRotationZ();
+struct Matrix4x4 *m4CreateRZ();
 
 struct Matrix4x4 *m4Translation();
 
