@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "matrix3.h": "c",
-        "math.h": "c",
-        "point3.h": "c",
-        "entity.h": "c"
-    }
-}

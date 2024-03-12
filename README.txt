@@ -10,8 +10,8 @@ For compiling the projects from 1 to 3 where i did not create any library you ca
 
 Any other folder from the 4 and on will be compile using the following command:
 
-------> gcc -o game src/*.c main.c -lglfw -lGL -lm -Wall 
-
+------> gcc -o game src/*.c main.c -lglfw -lGL -lm -Wall
+------> gcc -o createEnt src/*.c createEnt.c -lglfw -lGL -lm -Wall
 
 And of course for running the app just write this:
 
