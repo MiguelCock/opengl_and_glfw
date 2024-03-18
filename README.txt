@@ -16,3 +16,5 @@ Any other folder from the 4 and on will be compile using the following command:
 And of course for running the app just write this:
 
 ------> ./game
+
+si
