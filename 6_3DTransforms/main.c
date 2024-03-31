@@ -1,0 +1,68 @@
+#include "src/Include.h"
+
+int main(void)
+{
+    GLFWwindow *window;
+
+    if (!glfwInit())
+    {
+        exit(EXIT_FAILURE);
+    }
+
+    window = glfwCreateWindow(640, 480, "2DTranforms", NULL, NULL);
+    if (!window)
+    {
+        glfwTerminate();
+        exit(EXIT_FAILURE);
+    }
+
+    glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
+
+    glClearColor(0.7f, 0.7f, 1.0f, 1.0f);
+
+    while (!glfwWindowShouldClose(window))
+    {
+        int width, height;
+        glfwGetFramebufferSize(window, &width, &height);
+        glViewport(0, 0, width, height);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(0, width, height, 0, -1, 1);
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+
+        //translate
+
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+            
+        }
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+            
+        }
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+           
+        }
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+            
+        }
+        if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
+            
+        }
+        if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+            
+        }
+    
+
+
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+
+    glfwDestroyWindow(window);
+    glfwTerminate();
+
+    exit(EXIT_SUCCESS);
+}

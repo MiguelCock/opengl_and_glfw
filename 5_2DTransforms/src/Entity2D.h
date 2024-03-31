@@ -20,8 +20,8 @@ Entity *entCreate();
 
 void entFree(Entity *ent);
 
-void entDraw(Entity * ent);
+void entDraw(Entity *ent);
 
-Entity* entReadFile(char *filename);
+Entity *entReadFile(char *filename);
 
 void entTransform(Entity *ent, Matrix3x3 *m3);
