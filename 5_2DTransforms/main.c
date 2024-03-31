@@ -16,13 +16,13 @@ int main(void)
         exit(EXIT_FAILURE);
     }
 
-    struct Entity *ent = entReadFile();
-    struct Matrix3x3* moveX = m3Trasnlate(5, 0);
-    struct Matrix3x3* moveY = m3Trasnlate(0, 5);
-    struct Matrix3x3* moveXm = m3Trasnlate(-5, 0);
-    struct Matrix3x3* moveYm = m3Trasnlate(0, -5);
-    struct Matrix3x3* scaleM = m3Scale(1.1);
-    struct Matrix3x3* rotateM = m3Rotate(1);
+    Entity *ent = entReadFile("entity.bin");
+    Matrix3x3 right = m3Trasnlate(5, 0);
+    Matrix3x3 up = m3Trasnlate(0, 5);
+    Matrix3x3 left = m3Trasnlate(-5, 0);
+    Matrix3x3 down = m3Trasnlate(0, -5);
+    Matrix3x3 scaleM = m3Scale(1.01);
+    Matrix3x3 rotateM = m3Rotate(1);
 
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
@@ -42,25 +42,25 @@ int main(void)
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
 
-        //drawings
+        //translate
 
         if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-            entTransform(ent, moveX);
+            entTransform(ent, &right);
         }
         if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-            entTransform(ent, moveY);
+            entTransform(ent, &up);
         }
         if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-            entTransform(ent, moveXm);
+            entTransform(ent, &left);
         }
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-            entTransform(ent, moveYm);
+            entTransform(ent, &down);
         }
         if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
-            entTransform(ent, scaleM);
+            entTransform(ent, &scaleM);
         }
         if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-            entTransform(ent, rotateM);
+            entTransform(ent, &rotateM);
         }
         
         entDraw(ent);
@@ -73,10 +73,6 @@ int main(void)
     glfwTerminate();
 
     entFree(ent);
-    m3Free(moveX);
-    m3Free(moveY);
-    m3Free(moveXm);
-    m3Free(moveYm);
 
     exit(EXIT_SUCCESS);
 }

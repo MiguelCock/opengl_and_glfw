@@ -4,6 +4,6 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "Entity.h"
+#include "Entity2D.h"
 #include "Math3D.h"
 #include "Utils.h"
