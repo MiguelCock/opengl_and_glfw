@@ -27,7 +27,7 @@ void entFree(Entity *ent)
 
 void entDraw(Entity *ent, mat4 *proyection)
 {
-    glBegin(GL_LINE_STRIP);
+    glBegin(GL_LINES);
 
     for (int i = 0; i < ent->conections; i++)
     {

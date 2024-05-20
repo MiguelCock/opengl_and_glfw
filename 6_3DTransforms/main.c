@@ -36,10 +36,10 @@ int main(void)
 
     Entity *ent = entReadFile("entity.bin");
     mat4 projection = m4CreateProyection(80., 9./16., 0.1, 1000.);
-    mat4 up = m4Translation(0, 5, 0);
-    mat4 down = m4Translation(0, -5, 0);
-    mat4 left = m4Translation(-5, 0, 0);
-    mat4 right = m4Translation(5, 0, 0);
+    mat4 up = m4Translation(0, -5, 0);
+    mat4 down = m4Translation(0, 5, 0);
+    mat4 left = m4Translation(5, 0, 0);
+    mat4 right = m4Translation(-5, 0, 0);
     mat4 front = m4Translation(0, 0, 20);
     mat4 back = m4Translation(0, 0, -20);
     mat4 rotatex = m4CreateRX(1);
@@ -82,12 +82,15 @@ int main(void)
         }
         if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
             entTrueTrans(ent, &rotatex);
+            //entTransform(ent, &rotatex);
         }
         if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
             entTrueTrans(ent, &rotatey);
+            //entTransform(ent, &rotatey);
         }
         if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS) {
             entTrueTrans(ent, &rotatez);
+            //entTransform(ent, &rotatez);
         }
         if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
             entTransform(ent, &front);
